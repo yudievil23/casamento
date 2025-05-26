@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convite de Casamento - Augusto & Jhenifer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f4e9;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        .dancing-script {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        .envelope {
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        
+        .envelope:hover {
+            transform: translateY(-5px);
+        }
+        
+        .envelope.open {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-front, .envelope-back {
+            backface-visibility: hidden;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .envelope-back {
+            transform: rotateX(180deg);
+        }
+        
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-top: 120px solid #e8c4c4;
+            transform-origin: top;
+            transition: all 0.5s ease;
+            z-index: 3;
+        }
+        
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+        
+        .envelope-body {
+            position: relative;
+            width: 400px;
+            height: 250px;
+            background-color: #f1e3e3;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+        
+        .invitation {
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.5s ease 0.3s;
+        }
+        
+        .envelope.open ~ .invitation {
+            transform: scale(1);
+            opacity: 1;
+        }
+        
+        .gift-item {
+            transition: all 0.3s ease;
+        }
+        
+        .gift-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .location-link {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .location-link:hover {
+            color: #be185d;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 640px) {
+            .envelope-body {
+                width: 300px;
+                height: 200px;
+            }
+            
+            .flap {
+                border-left: 150px solid transparent;
+                border-right: 150px solid transparent;
+                border-top: 90px solid #e8c4c4;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center py-10 px-4">
+    <div class="text-center mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-rose-800 dancing-script">Augusto & Jhenifer</h1>
+        <p class="text-gray-600 mt-2">Clique no envelope para abrir nosso convite</p>
+    </div>
+    
+    <div class="relative mb-16">
+        <div class="envelope" id="envelope">
+            <div class="flap"></div>
+            <div class="envelope-body">
+                <div class="envelope-front flex items-center justify-center h-full">
+                    <div class="text-center">
+                        <i class="fas fa-heart text-rose-600 text-4xl mb-2"></i>
+                        <p class="dancing-script text-2xl text-rose-800 font-bold">Save the Date</p>
+                        <p class="text-gray-600 mt-1">Junho 2025</p>
+                    </div>
+                </div>
+                <div class="envelope-back"></div>
+            </div>
+        </div>
+        
+        <div class="invitation bg-white rounded-lg shadow-xl p-6 max-w-md mx-auto -mt-8 relative z-10">
+            <div class="text-center">
+                <h2 class="dancing-script text-3xl text-rose-800 font-bold mb-4">Augusto & Jhenifer</h2>
+                <div class="border-t border-b border-rose-200 py-4 my-4">
+                    <p class="text-gray-700 mb-2">Nós convidamos você para participar</p>
+                    <p class="text-xl font-semibold text-rose-700">do nosso casamento</p>
+                </div>
+                <p class="text-2xl dancing-script text-rose-800 font-bold mb-2">DOM 08 JUN 2025</p>
+                <p class="text-gray-700 mb-1">A cerimônia terá início às <span class="font-semibold">19h</span></p>
+                <p class="text-gray-600 text-sm mb-4">Solicitamos gentileza de chegar até às 18h30</p>
+                
+                <div class="bg-rose-50 rounded-lg p-4 mt-4 mb-6">
+                    <p class="font-semibold text-rose-800">Local:</p>
+                    <div class="location-link" onclick="openGoogleMaps()">
+                        <p class="text-gray-700">Av. Gilberto Mestrinho, 1201 - Liberdade</p>
+                        <p class="text-gray-700">Manacapuru - AM, 69400-000</p>
+                        <p class="text-rose-600 text-sm mt-2 flex items-center justify-center">
+                            <i class="fas fa-map-marker-alt mr-1"></i> Clique para abrir no Google Maps
+                        </p>
+                    </div>
+                    <p class="text-gray-600 text-sm mt-2">Recepção a seguir</p>
+                </div>
+                
+                <a href="https://wa.me/92991607368" class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full transition duration-300">
+                    <i class="fab fa-whatsapp mr-2"></i> Confirmar presença
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="max-w-4xl w-full px-4">
+        <h3 class="text-2xl dancing-script text-center text-rose-800 font-bold mb-8">Lista de Presentes</h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cozinha / Área de Serviço -->
+            <div class="gift-item bg-white rounded-lg shadow-md p-5">
+                <h4 class="font-bold text-lg text-rose-700 mb-3 flex items-center">
+                    <i class="fas fa-utensils mr-2"></i> Cozinha / Área de Serviço
+                </h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Liquidificador</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Air Fryer</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Ferro de passar</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Torradeira</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Aspirador de pó</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Cafeteira</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Kit de limpeza</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Tábua de cortar</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Lava louças</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Jogo de panelas</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Araras de roupa</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Panelas avulsas</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Banheiro -->
+            <div class="gift-item bg-white rounded-lg shadow-md p-5">
+                <h4 class="font-bold text-lg text-rose-700 mb-3 flex items-center">
+                    <i class="fas fa-bath mr-2"></i> Banheiro
+                </h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Pratos e toalhas</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Jogos de copos</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Roupão</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Kit taças</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Organizador de louça</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Kit organizador de banheiro</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Porta condimentos</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Kit porcelana</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Quarto -->
+            <div class="gift-item bg-white rounded-lg shadow-md p-5">
+                <h4 class="font-bold text-lg text-rose-700 mb-3 flex items-center">
+                    <i class="fas fa-bed mr-2"></i> Quarto
+                </h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Jogos de cama (preto ou cinza)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Almofadas</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Abajur</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Sala / Decoração -->
+            <div class="gift-item bg-white rounded-lg shadow-md p-5">
+                <h4 class="font-bold text-lg text-rose-700 mb-3 flex items-center">
+                    <i class="fas fa-couch mr-2"></i> Sala / Decoração
+                </h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Nichos decorativos</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Tapete</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Mesa (4 lugares)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Cortinas</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Ferramentas / Equipamentos -->
+            <div class="gift-item bg-white rounded-lg shadow-md p-5">
+                <h4 class="font-bold text-lg text-rose-700 mb-3 flex items-center">
+                    <i class="fas fa-tools mr-2"></i> Ferramentas / Equipamentos
+                </h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Kit ferramenta</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Furadeira</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Eletrodomésticos Maiores -->
+            <div class="gift-item bg-white rounded-lg shadow-md p-5">
+                <h4 class="font-bold text-lg text-rose-700 mb-3 flex items-center">
+                    <i class="fas fa-plug mr-2"></i> Eletrodomésticos Maiores
+                </h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Micro-ondas</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Umidificador de ar</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Lazer -->
+            <div class="gift-item bg-white rounded-lg shadow-md p-5">
+                <h4 class="font-bold text-lg text-rose-700 mb-3 flex items-center">
+                    <i class="fas fa-gamepad mr-2"></i> Lazer
+                </h4>
+                <ul class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Kit churrasco</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>Churrasqueira</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-check text-rose-500 mt-1 mr-2 text-xs"></i>
+                        <span>PS4</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="mt-16 text-center text-gray-600 text-sm">
+        <p>Com amor, Augusto & Jhenifer</p>
+        <p class="mt-2">Para mais informações: (92) 99160-7368</p>
+    </footer>
+    
+    <script>
+        document.getElementById('envelope').addEventListener('click', function() {
+            this.classList.toggle('open');
+        });
+        
+        function openGoogleMaps() {
+            // URL do Google Maps com o endereço do casamento
+            const address = "Av. Gilberto Mestrinho, 1201 - Liberdade, Manacapuru - AM, 69400-000";
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+            window.open(mapsUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
